@@ -1,22 +1,47 @@
-//common shared function
+// ========================================
+// COMMON REUSABLE FUNCTIONS
+// ========================================
 
+// Get numeric value from an input field
 function getInputFieldById(id) {
-  const inputValue = document.getElementById(id).value;
-  const inputNumber = parseFloat(inputValue);
-  console.log(inputNumber, inputValue);
-  return inputNumber;
+  const inputElement = document.getElementById(id);
+  const inputValue = inputElement.value.trim();
+
+  if (inputValue === "") {
+    return NaN;
+  }
+
+  return Number(inputValue);
 }
 
+// Get numeric value from a text element
 function getTextFieldById(id) {
   const textValue = document.getElementById(id).innerText;
-  const textNumber = parseFloat(textValue);
-  return textNumber;
+  return Number(textValue.replace(/[^0-9.-]+/g, ""));
 }
 
-function showSectionBYid(id) {
-  document.getElementById("show_donation").classList.add("hidden");
-  document.getElementById("show_history").classList.add("hidden");
+// Update text content of an element
+function setTextFieldById(id, value) {
+  document.getElementById(id).innerText = value;
+}
 
-  //show section by id
-  document.getElementById(id).classList.remove("hidden");
+// Format number with commas
+function formatMoney(amount) {
+  return amount.toLocaleString("en-BD");
+}
+
+// Show a notification message
+let toastTimer;
+
+function showToast(message) {
+  const toast = document.getElementById("toast");
+
+  toast.innerText = message;
+  toast.classList.add("show");
+
+  clearTimeout(toastTimer);
+
+  toastTimer = setTimeout(function () {
+    toast.classList.remove("show");
+  }, 2800);
 }
